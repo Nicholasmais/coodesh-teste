@@ -1,0 +1,24 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:17.2-alpine3.20
+    restart: always
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: coodesh
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+
+  backend:
+    container_name: backend
+    build:
+      context: ./app/
+      dockerfile: ../Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./app/:/app/
